@@ -1,0 +1,6 @@
+Property ID,Property Name,Address,Price,Bedrooms,Bathrooms,Square Feet
+PROP_001,Sunset Villa,"123 Main St, Springfield",500000,3,2,2000
+PROP_002,Ocean View Condo,"456 Beach Ave, Oceanside",750000,2,2,1500
+PROP_003,Mountain Retreat,"789 Hill Rd, Highland",300000,4,3,2500
+PROP_004,Downtown Loft,"321 City St, Metro",400000,1,1,800
+PROP_005,Suburban Home,"654 Oak Dr, Suburbia",350000,3,2,1800

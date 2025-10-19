@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+reims.db*
+
+# Logs
+*.log
+*.txt
+
+# Environment variables
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/build/
+frontend/dist/
+
+# Storage & uploads
+storage/
+uploads/
+temp_*/
+processed_data/
+minio-data/
+
+# Backups
+backups/
+
+# Docker
+*.pid
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# MinIO executable
+minio.exe
+
+# Redis persistence
+*.rdb
+*.aof
+

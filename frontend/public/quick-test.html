@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REIMS Quick Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .status {
+            background: rgba(0, 255, 127, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 REIMS Vite Server Test</h1>
+    <div class="status">✅ Vite is working correctly!</div>
+    <p>Time: <span id="time"></span></p>
+    <p>URL: http://localhost:5173/quick-test.html</p>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        console.log('✅ Quick test page loaded successfully!');
+    </script>
+</body>
+</html>

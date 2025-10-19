@@ -1,0 +1,4 @@
+Property ID,Property Name,Address,Price,Bedrooms,Bathrooms,Square Feet
+DEMO_001,Executive Demo Property,123 Business Ave Springfield,750000,4,3,2500
+DEMO_002,Management Test Property,456 Corporate Blvd Oceanside,850000,3,2,2200
+DEMO_003,MinIO Integration Test,789 Storage St Highland,650000,5,4,3000

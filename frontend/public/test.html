@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REIMS System Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .status.success { background: #4ade80; color: #065f46; }
+        .status.error { background: #f87171; color: #7f1d1d; }
+        .status.loading { background: #fbbf24; color: #78350f; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .test-results {
+            margin-top: 20px;
+            font-family: monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🏠 REIMS System Status</h1>
+        <p>Real Estate Information Management System - Connection Test</p>
+        
+        <div>
+            <h3>Service Status:</h3>
+            <div id="frontend-status" class="status loading">Frontend: Checking...</div>
+            <div id="backend-status" class="status loading">Backend: Checking...</div>
+        </div>
+        
+        <div>
+            <h3>API Tests:</h3>
+            <button onclick="testHealth()">Test Health Endpoint</button>
+            <button onclick="testDocuments()">Test Documents API</button>
+            <button onclick="testAnalytics()">Test Analytics API</button>
+        </div>
+        
+        <div id="test-results" class="test-results"></div>
+    </div>
+
+    <script>
+        // Update frontend status
+        document.getElementById('frontend-status').className = 'status success';
+        document.getElementById('frontend-status').textContent = 'Frontend: ✅ Running (Port 5173)';
+
+        // Function to log test results
+        function logResult(test, result) {
+            const resultsDiv = document.getElementById('test-results');
+            const timestamp = new Date().toLocaleTimeString();
+            resultsDiv.textContent += `[${timestamp}] ${test}: ${JSON.stringify(result, null, 2)}\n\n`;
+        }
+
+        // Test backend health
+        async function testHealth() {
+            try {
+                const response = await fetch('http://localhost:8001/health');
+                const data = await response.json();
+                
+                document.getElementById('backend-status').className = 'status success';
+                document.getElementById('backend-status').textContent = 'Backend: ✅ Running (Port 8001)';
+                
+                logResult('Health Check', { success: true, data });
+            } catch (error) {
+                document.getElementById('backend-status').className = 'status error';
+                document.getElementById('backend-status').textContent = 'Backend: ❌ Not Responding';
+                
+                logResult('Health Check', { success: false, error: error.message });
+            }
+        }
+
+        // Test documents API
+        async function testDocuments() {
+            try {
+                const response = await fetch('http://localhost:8001/api/documents');
+                const data = await response.json();
+                logResult('Documents API', { success: true, data });
+            } catch (error) {
+                logResult('Documents API', { success: false, error: error.message });
+            }
+        }
+
+        // Test analytics API
+        async function testAnalytics() {
+            try {
+                const response = await fetch('http://localhost:8001/api/analytics');
+                const data = await response.json();
+                logResult('Analytics API', { success: true, data });
+            } catch (error) {
+                logResult('Analytics API', { success: false, error: error.message });
+            }
+        }
+
+        // Auto-test health on page load
+        window.onload = function() {
+            setTimeout(testHealth, 1000);
+        };
+    </script>
+</body>
+</html>

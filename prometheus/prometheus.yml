@@ -1,0 +1,52 @@
+# Prometheus Configuration for REIMS
+# Scrapes metrics from backend API and system services
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'reims-dev'
+    environment: 'development'
+
+# Scrape configurations
+scrape_configs:
+  # REIMS Backend API metrics
+  - job_name: 'reims-backend'
+    static_configs:
+      - targets: ['host.docker.internal:8001']
+    metrics_path: '/monitoring/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Optional: Node exporter (if added later)
+  # - job_name: 'node-exporter'
+  #   static_configs:
+  #     - targets: ['node-exporter:9100']
+
+  # Optional: cAdvisor for container metrics (if added later)
+  # - job_name: 'cadvisor'
+  #   static_configs:
+  #     - targets: ['cadvisor:8080']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
