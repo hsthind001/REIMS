@@ -160,6 +160,7 @@ services:
       - ./storage:/app/storage
       - ./properties:/app/properties
       - ./processed_data:/app/processed_data
+      - ./queue_service:/app/queue_service  # Mount code directory for live updates
     depends_on:
       redis:
         condition: service_healthy
@@ -168,6 +169,72 @@ services:
     restart: unless-stopped
     networks:
       - default
+
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.backend
+  #   container_name: reims-backend
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - POSTGRES_HOST=postgres
+  #     - POSTGRES_PORT=5432
+  #     - POSTGRES_DB=reims
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=dev123
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - MINIO_ENDPOINT=minio:9000
+  #     - MINIO_ACCESS_KEY=minioadmin
+  #     - MINIO_SECRET_KEY=minioadmin
+  #     - OLLAMA_HOST=http://ollama:11434
+  #     - DATABASE_URL=sqlite:////app/data/reims.db
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./backend:/app/backend
+  #     - ./reims.db:/app/data/reims.db
+  #     - ./uploads:/app/uploads
+  #     - ./storage:/app/storage
+  #     - ./properties:/app/properties
+  #     - ./processed_data:/app/processed_data
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #     minio:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
+
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.frontend
+  #   container_name: reims-frontend
+  #   environment:
+  #     - VITE_API_URL=http://localhost:8000
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     backend:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
 
 volumes:
   pgadmin_data:

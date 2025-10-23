@@ -131,6 +131,26 @@ const formatDate = (date) => {
   return date.toLocaleDateString()
 }
 
+// Detect document type from filename
+const detectDocumentType = (fileName) => {
+  const nameLower = fileName.toLowerCase()
+  
+  if (nameLower.includes('balance sheet') || nameLower.includes('balance-sheet')) {
+    return 'balance_sheet'
+  }
+  if (nameLower.includes('income statement') || nameLower.includes('income-statement')) {
+    return 'income_statement'
+  }
+  if (nameLower.includes('cash flow') || nameLower.includes('cashflow') || nameLower.includes('cash-flow')) {
+    return 'cash_flow_statement'
+  }
+  if (nameLower.includes('rent roll') || nameLower.includes('rent-roll') || nameLower.includes('rentroll')) {
+    return 'rent_roll'
+  }
+  
+  return 'other'
+}
+
 // Main component
 export default function DocumentUploadCenter() {
   const [isDragging, setIsDragging] = useState(false)
@@ -206,9 +226,9 @@ export default function DocumentUploadCenter() {
         // Create FormData for file upload
         const formData = new FormData()
         formData.append('file', file)
-        // Don't send property_id - let backend auto-detect from filename
-        // formData.append('property_id', '1') // Removed: auto-creation handles this
-        formData.append('document_type', 'financial_statement')
+        // Auto-detect document type from filename
+        const detectedType = detectDocumentType(file.name)
+        formData.append('document_type', detectedType)
 
         // Simulate progress update
         const progressInterval = setInterval(() => {

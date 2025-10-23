@@ -42,7 +42,7 @@ try:
     )
     
     # Ensure bucket exists
-    bucket_name = "reims-documents"
+    bucket_name = "reims-files"
     if not minio_client.bucket_exists(bucket_name):
         minio_client.make_bucket(bucket_name)
     
@@ -69,7 +69,7 @@ except Exception as e:
     rq_queue = None
 
 # Configure logging
-logging.basicConfig(filename='backend.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='simple_backend_app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Create a simple FastAPI app with CORS
@@ -90,17 +90,59 @@ mock_properties = []
 
 # MinIO bucket organization structure
 BUCKET_PATHS = {
-    "balance_sheet": "financial-statements/balance-sheets/",
-    "income_statement": "financial-statements/income-statements/",
-    "cash_flow_statement": "financial-statements/cash-flow-statements/",
-    "rent_roll": "financial-statements/rent-rolls/",
-    "other": "financial-statements/other/"
+    "balance_sheet": "Financial Statements/{year}/Balance Sheets/",
+    "income_statement": "Financial Statements/{year}/Income Statements/",
+    "cash_flow_statement": "Financial Statements/{year}/Cash Flow Statements/",
+    "rent_roll": "Financial Statements/{year}/Rent Rolls/",
+    "other": "Financial Statements/{year}/Other/"
 }
 
+def extract_year_from_filename(filename: str) -> str:
+    """Extract year from filename (e.g., 'ESP 2024 Balance Sheet.pdf' -> '2024')"""
+    import re
+    # Look for 4-digit year in filename
+    match = re.search(r'\b(20\d{2})\b', filename)
+    if match:
+        return match.group(1)
+    # Default to current year if not found
+    from datetime import datetime
+    return str(datetime.now().year)
+
+def detect_document_type_from_filename(filename: str) -> str:
+    """
+    Auto-detect document type from filename
+    Examples:
+    - 'ESP 2024 Balance Sheet.pdf' -> 'balance_sheet'
+    - 'ESP 2024 Income Statement.pdf' -> 'income_statement'
+    - 'ESP 2024 Cash Flow Statement.pdf' -> 'cash_flow_statement'
+    - 'ESP April 2025 Rent Roll.pdf' -> 'rent_roll'
+    """
+    filename_lower = filename.lower()
+    
+    # Check for balance sheet
+    if 'balance sheet' in filename_lower or 'balance-sheet' in filename_lower:
+        return 'balance_sheet'
+    
+    # Check for income statement
+    if 'income statement' in filename_lower or 'income-statement' in filename_lower:
+        return 'income_statement'
+    
+    # Check for cash flow statement
+    if 'cash flow' in filename_lower or 'cashflow' in filename_lower or 'cash-flow' in filename_lower:
+        return 'cash_flow_statement'
+    
+    # Check for rent roll
+    if 'rent roll' in filename_lower or 'rent-roll' in filename_lower or 'rentroll' in filename_lower:
+        return 'rent_roll'
+    
+    # Default to other
+    return 'other'
+
 def get_minio_path(document_type: str, filename: str) -> str:
-    """Generate MinIO path based on document type"""
+    """Generate MinIO path based on document type and year from filename"""
+    year = extract_year_from_filename(filename)
     base_path = BUCKET_PATHS.get(document_type, BUCKET_PATHS["other"])
-    return f"{base_path}{filename}"
+    return base_path.format(year=year) + filename
 
 @app.get("/health")
 async def health_check():
@@ -633,7 +675,8 @@ async def upload_document(
         storage_dir = Path("storage")
         storage_dir.mkdir(exist_ok=True)
         
-        stored_filename = f"{document_id}_{file.filename}"
+        # Use original filename only (no UUID prefix)
+        stored_filename = file.filename
         file_path = storage_dir / stored_filename
         
         with open(file_path, "wb") as buffer:
@@ -667,6 +710,12 @@ async def upload_document(
         if MINIO_AVAILABLE:
             try:
                 # Upload to MinIO
+                # Auto-detect document type from filename if not properly set
+                if document_type not in BUCKET_PATHS or document_type == 'financial_statement':
+                    detected_type = detect_document_type_from_filename(file.filename)
+                    logger.info(f"Auto-detected document type: {document_type} -> {detected_type}")
+                    document_type = detected_type
+                
                 # Use new bucket organization structure
                 object_name = get_minio_path(document_type, stored_filename)
                 print(f"DEBUG: document_type={document_type}, stored_filename={stored_filename}, object_name={object_name}")
