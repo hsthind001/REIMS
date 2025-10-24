@@ -147,7 +147,7 @@ def create_property_from_documents():
     # Get values from statements
     if 'Balance Sheet' in financials:
         bs = financials['Balance Sheet']
-        aggregated['total_value'] = bs.get('total_assets', 0)
+        aggregated['total_value'] = bs.get('property_and_equipment', bs.get('total_assets', 0))
     
     if 'Income Statement' in financials:
         inc = financials['Income Statement']

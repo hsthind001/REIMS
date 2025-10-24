@@ -343,9 +343,10 @@ async def get_property_by_id(property_id: int):
             conn = sqlite3.connect("reims.db")
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, name, address, city, state, square_footage,
-                       purchase_price, current_market_value, monthly_rent,
-                       year_built, property_type, status, created_at
+                SELECT id, name, address, city, state, square_footage, 
+                       purchase_price, current_market_value, monthly_rent, 
+                       year_built, property_type, status, annual_noi, created_at,
+                       total_units, occupied_units, occupancy_rate
                 FROM properties
                 WHERE id = ?
             """, (property_id,))
@@ -355,6 +356,19 @@ async def get_property_by_id(property_id: int):
             
             if row is None:
                 raise HTTPException(status_code=404, detail=f"Property {property_id} not found")
+            
+            # Calculate occupancy rate from stores data if available
+            occupancy_rate = 0.95  # Default fallback
+            # Row indices: [14]=total_units, [15]=occupied_units, [16]=occupancy_rate
+            if len(row) > 16 and row[16] and row[16] > 0:  # occupancy_rate column exists and > 0
+                occupancy_rate = row[16]  # Already stored as decimal (0.84 = 84%)
+                print(f"[DEBUG] Property {row[0]} ({row[1]}): Using DB occupancy_rate = {row[16]} -> {occupancy_rate}")
+            elif len(row) > 14 and row[14] and row[15] and row[14] > 0:  # Use total_units and occupied_units
+                occupancy_rate = row[15] / row[14]
+                print(f"[DEBUG] Property {row[0]} ({row[1]}): Calculated occupancy_rate = {row[15]}/{row[14]} -> {occupancy_rate}")
+            else:
+                occupancy_rate = 0.95  # Default fallback
+                print(f"[DEBUG] Property {row[0]} ({row[1]}): Using default occupancy_rate = {occupancy_rate}")
             
             return {
                 "id": row[0],
@@ -369,9 +383,10 @@ async def get_property_by_id(property_id: int):
                 "year_built": row[9],
                 "property_type": row[10],
                 "status": row[11],
-                "created_at": row[12],
-                "noi": row[8] * 12 if row[8] else 0,  # Estimate NOI as annual rent
-                "occupancy_rate": 0.95  # Default occupancy rate
+                "annual_noi": row[12],
+                "created_at": row[13],
+                "noi": row[12] if row[12] else (row[8] * 12 if row[8] else 0),
+                "occupancy_rate": occupancy_rate
             }
         except HTTPException:
             raise

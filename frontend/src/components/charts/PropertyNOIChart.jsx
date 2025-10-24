@@ -39,8 +39,17 @@ export default function PropertyNOIChart({ propertyData }) {
   const data = generateNOIData();
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+    <div>
+      <div style={{
+        fontSize: '12px',
+        color: '#9ca3af',
+        marginBottom: '8px',
+        fontStyle: 'italic'
+      }}>
+        * Projected data based on annual NOI ÷ 12 with seasonal variations
+      </div>
+      <ResponsiveContainer width="100%" height={350}>
+        <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
         <XAxis 
           dataKey="month" 
@@ -90,5 +99,6 @@ export default function PropertyNOIChart({ propertyData }) {
         />
       </LineChart>
     </ResponsiveContainer>
+    </div>
   );
 }

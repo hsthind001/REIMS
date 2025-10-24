@@ -98,7 +98,7 @@ async def upload_document(
         minio_endpoint = os.getenv("MINIO_ENDPOINT", "localhost:9000")
         minio_access = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
         minio_secret = os.getenv("MINIO_SECRET_KEY", "minioadmin")
-        bucket_name = os.getenv("MINIO_BUCKET_NAME", "reims-documents")
+        bucket_name = os.getenv("MINIO_BUCKET_NAME", "reims-files")
         
         client = Minio(
             minio_endpoint,
@@ -111,8 +111,36 @@ async def upload_document(
         if not client.bucket_exists(bucket_name):
             client.make_bucket(bucket_name)
         
-        # Upload to MinIO
-        minio_object_name = f"{property_id}/{safe_filename}"
+        # Extract year from metadata
+        year = final_document_year or datetime.utcnow().year
+        
+        # Determine document subtype based on content analysis
+        def get_document_subtype(filename, doc_type):
+            """Analyze filename and document type to determine subtype folder"""
+            filename_lower = filename.lower()
+            
+            # For financial statements, determine specific type
+            if doc_type == 'financial_statement' or 'financial' in str(doc_type).lower():
+                if 'balance' in filename_lower and 'sheet' in filename_lower:
+                    return 'Balance Sheets'
+                elif 'cash' in filename_lower and 'flow' in filename_lower:
+                    return 'Cash Flow Statements'
+                elif 'income' in filename_lower and 'statement' in filename_lower:
+                    return 'Income Statements'
+                elif 'rent' in filename_lower and 'roll' in filename_lower:
+                    return 'Rent Rolls'
+                else:
+                    return 'Other Financial Documents'
+            elif doc_type == 'rent_roll' or 'rent' in filename_lower:
+                return 'Rent Rolls'
+            else:
+                return 'Other Documents'
+        
+        doc_subtype = get_document_subtype(file.filename, final_document_type or 'other')
+        
+        # Use original filename (no document_id prefix)
+        # Build document-type-first path: Financial Statements/{year}/{subtype}/{filename}
+        minio_object_name = f"Financial Statements/{year}/{doc_subtype}/{file.filename}"
         
         from io import BytesIO
         client.put_object(
@@ -159,6 +187,38 @@ async def upload_document(
     db.add(db_document)
     db.commit()
     db.refresh(db_document)
+    
+    # Also write to financial_documents table for dual-table sync
+    try:
+        from sqlalchemy import text
+        db.execute(
+            text("""
+                INSERT INTO financial_documents (
+                    id, property_id, file_path, file_name, document_type,
+                    property_name, document_year, document_period,
+                    status, upload_date
+                ) VALUES (
+                    :document_id, :property_id, :file_path, :file_name, :document_type,
+                    :property_name, :document_year, :document_period,
+                    'uploaded', datetime('now')
+                )
+            """),
+            {
+                "document_id": doc_id,
+                "property_id": property_id,
+                "file_path": minio_object_name if minio_bucket else file_path,
+                "file_name": file.filename,
+                "document_type": final_document_type or "other",
+                "property_name": final_property_name,
+                "document_year": final_document_year,
+                "document_period": final_document_period
+            }
+        )
+        db.commit()
+        print(f"SUCCESS: Document also saved to financial_documents table for sync")
+    except Exception as e:
+        # Log warning but don't fail the request
+        print(f"WARNING: Failed to sync to financial_documents table: {e}")
     
     # Create metadata for legacy compatibility
     metadata = {

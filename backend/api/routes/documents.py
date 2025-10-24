@@ -202,8 +202,38 @@ async def upload_document(
         # Generate document ID
         document_id = str(uuid.uuid4())
         
-        # Build MinIO path: properties/{propertyId}/{documentId}_{filename}
-        file_path = f"properties/{property_id}/{document_id}_{file.filename}"
+        # Extract year from metadata
+        year = final_document_year or datetime.utcnow().year
+        
+        # Determine document subtype based on content analysis
+        def get_document_subtype(filename, doc_type):
+            """Analyze filename and document type to determine subtype folder"""
+            filename_lower = filename.lower()
+            
+            # For financial statements, determine specific type
+            if doc_type == 'financial_statement' or 'financial' in doc_type.lower():
+                if 'balance' in filename_lower and 'sheet' in filename_lower:
+                    return 'Balance Sheets'
+                elif 'cash' in filename_lower and 'flow' in filename_lower:
+                    return 'Cash Flow Statements'
+                elif 'income' in filename_lower and 'statement' in filename_lower:
+                    return 'Income Statements'
+                elif 'rent' in filename_lower and 'roll' in filename_lower:
+                    return 'Rent Rolls'
+                else:
+                    return 'Other Financial Documents'
+            elif doc_type == 'rent_roll' or 'rent' in filename_lower:
+                return 'Rent Rolls'
+            else:
+                return 'Other Documents'
+        
+        doc_subtype = get_document_subtype(file.filename, document_type)
+        
+        # Use original filename (no document_id prefix)
+        original_filename = file.filename
+        
+        # Build new document-type-first path: Financial Statements/{year}/{subtype}/{filename}
+        file_path = f"Financial Statements/{year}/{doc_subtype}/{original_filename}"
         
         # Upload to MinIO
         try:
@@ -262,6 +292,46 @@ async def upload_document(
                     "document_period": final_document_period
                 }
             )
+            # Also write to documents table for backward compatibility and dual-table sync
+            try:
+                db.execute(
+                    text("""
+                        INSERT INTO documents (
+                            id, document_id, original_filename, stored_filename,
+                            property_id, file_size, content_type, file_path,
+                            upload_timestamp, status, minio_bucket, minio_object_name,
+                            minio_url, storage_type, property_name, document_year,
+                            document_type, document_period
+                        ) VALUES (
+                            :id, :document_id, :original_filename, :stored_filename,
+                            :property_id, :file_size, :content_type, :file_path,
+                            datetime('now'), 'uploaded', 'reims-files', :minio_object_name,
+                            :minio_url, 'minio', :property_name, :document_year,
+                            :document_type, :document_period
+                        )
+                    """),
+                    {
+                        "id": str(uuid.uuid4()),
+                        "document_id": document_id,
+                        "original_filename": file.filename,
+                        "stored_filename": file.filename,  # Use original filename, no prefix
+                        "property_id": str(property_id),
+                        "file_size": len(file_content),
+                        "content_type": file.content_type,
+                        "file_path": file_path,
+                        "minio_object_name": file_path,
+                        "minio_url": f"http://localhost:9000/reims-files/{file_path}",
+                        "property_name": final_property_name,
+                        "document_year": final_document_year,
+                        "document_type": document_type,
+                        "document_period": final_document_period
+                    }
+                )
+                print(f"SUCCESS: Document also saved to documents table for sync")
+            except Exception as e:
+                # Log warning but don't fail the request
+                print(f"WARNING: Failed to sync to documents table: {e}")
+            
             db.commit()
             print(f"SUCCESS: Document metadata saved: {document_id}")
             print(f"         Property: {final_property_name}, Year: {final_document_year}, Period: {final_document_period}")

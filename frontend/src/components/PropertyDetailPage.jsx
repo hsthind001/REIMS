@@ -448,7 +448,7 @@ export default function PropertyDetailPage() {
                   fontSize: '14px',
                   color: '#6b7280'
                 }}>
-                  Monthly NOI trends and projections
+                  Projected monthly averages (based on annual NOI)
                 </div>
               </div>
             </div>
@@ -498,7 +498,7 @@ export default function PropertyDetailPage() {
                   fontSize: '14px',
                   color: '#6b7280'
                 }}>
-                  Revenue breakdown and growth metrics
+                  Projected revenue breakdown (based on monthly rent)
                 </div>
               </div>
             </div>
