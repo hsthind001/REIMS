@@ -284,15 +284,16 @@ async def get_properties():
             for row in cursor.fetchall():
                 # Calculate occupancy rate from stores data if available
                 occupancy_rate = 0.95  # Default fallback
-                print(f"DEBUG: Row length: {len(row)}, Row data: {row}")
-                if len(row) > 15 and row[15] and row[15] > 0:  # occupancy_rate column exists and > 0
-                    occupancy_rate = row[15] / 100.0
-                    print(f"DEBUG: Using occupancy_rate column: {row[15]} -> {occupancy_rate}")
-                elif len(row) > 13 and len(row) > 14 and row[13] and row[14] and row[13] > 0:  # Use total_units and occupied_units
-                    occupancy_rate = row[14] / row[13]
-                    print(f"DEBUG: Using total_units/occupied_units: {row[14]}/{row[13]} -> {occupancy_rate}")
+                # Row indices: [14]=total_units, [15]=occupied_units, [16]=occupancy_rate
+                if len(row) > 16 and row[16] and row[16] > 0:  # occupancy_rate column exists and > 0
+                    occupancy_rate = row[16]  # Already stored as decimal (0.84 = 84%)
+                    print(f"[DEBUG] Property {row[0]} ({row[1]}): Using DB occupancy_rate = {row[16]} -> {occupancy_rate}")
+                elif len(row) > 14 and row[14] and row[15] and row[14] > 0:  # Use total_units and occupied_units
+                    occupancy_rate = row[15] / row[14]
+                    print(f"[DEBUG] Property {row[0]} ({row[1]}): Calculated occupancy_rate = {row[15]}/{row[14]} -> {occupancy_rate}")
                 else:
-                    print(f"DEBUG: Using default occupancy_rate: {occupancy_rate}")
+                    occupancy_rate = 0.95  # Default fallback
+                    print(f"[DEBUG] Property {row[0]} ({row[1]}): Using default occupancy_rate = {occupancy_rate}")
                 
                 properties.append({
                     "id": row[0],
