@@ -1,0 +1,173 @@
+[
+  {
+    "minio_path": "Financial Statements/2023/Balance Sheets/ESP 2023 Balance Sheet.pdf",
+    "filename": "ESP 2023 Balance Sheet.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2023,
+    "document_type": "balance_sheet",
+    "file_size": 3585
+  },
+  {
+    "minio_path": "Financial Statements/2023/Cash Flow Statements/ESP 2023 Cash Flow Statement.pdf",
+    "filename": "ESP 2023 Cash Flow Statement.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2023,
+    "document_type": "cash_flow_statement",
+    "file_size": 25545
+  },
+  {
+    "minio_path": "Financial Statements/2023/Income Statements/ESP 2023 Income Statement.pdf",
+    "filename": "ESP 2023 Income Statement.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2023,
+    "document_type": "income_statement",
+    "file_size": 8684
+  },
+  {
+    "minio_path": "Financial Statements/2024/Balance Sheets/ESP 2024 Balance Sheet.pdf",
+    "filename": "ESP 2024 Balance Sheet.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2024,
+    "document_type": "balance_sheet",
+    "file_size": 8358
+  },
+  {
+    "minio_path": "Financial Statements/2024/Balance Sheets/Hammond Aire 2024 Balance Sheet.pdf",
+    "filename": "Hammond Aire 2024 Balance Sheet.pdf",
+    "property_id": 3,
+    "property_name": "Hammond Aire",
+    "document_year": 2024,
+    "document_type": "balance_sheet",
+    "file_size": 8387
+  },
+  {
+    "minio_path": "Financial Statements/2024/Balance Sheets/TCSH 2024 Balance Sheet.pdf",
+    "filename": "TCSH 2024 Balance Sheet.pdf",
+    "property_id": 6,
+    "property_name": "The Crossings of Spring Hill",
+    "document_year": 2024,
+    "document_type": "balance_sheet",
+    "file_size": 3764
+  },
+  {
+    "minio_path": "Financial Statements/2024/Balance Sheets/Wendover Commons 2024 Balance Sheet.pdf",
+    "filename": "Wendover Commons 2024 Balance Sheet.pdf",
+    "property_id": 2,
+    "property_name": "Wendover Commons",
+    "document_year": 2024,
+    "document_type": "balance_sheet",
+    "file_size": 3595
+  },
+  {
+    "minio_path": "Financial Statements/2024/Cash Flow Statements/ESP 2024 Cash Flow Statement.pdf",
+    "filename": "ESP 2024 Cash Flow Statement.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2024,
+    "document_type": "cash_flow_statement",
+    "file_size": 25569
+  },
+  {
+    "minio_path": "Financial Statements/2024/Cash Flow Statements/Hammond Aire 2024 Cash Flow Statement.pdf",
+    "filename": "Hammond Aire 2024 Cash Flow Statement.pdf",
+    "property_id": 3,
+    "property_name": "Hammond Aire",
+    "document_year": 2024,
+    "document_type": "cash_flow_statement",
+    "file_size": 25785
+  },
+  {
+    "minio_path": "Financial Statements/2024/Cash Flow Statements/TCSH 2024 Cash Flow Statement.pdf",
+    "filename": "TCSH 2024 Cash Flow Statement.pdf",
+    "property_id": 6,
+    "property_name": "The Crossings of Spring Hill",
+    "document_year": 2024,
+    "document_type": "cash_flow_statement",
+    "file_size": 25388
+  },
+  {
+    "minio_path": "Financial Statements/2024/Cash Flow Statements/Wendover Commons 2024 Cash Flow Statement.pdf",
+    "filename": "Wendover Commons 2024 Cash Flow Statement.pdf",
+    "property_id": 2,
+    "property_name": "Wendover Commons",
+    "document_year": 2024,
+    "document_type": "cash_flow_statement",
+    "file_size": 25263
+  },
+  {
+    "minio_path": "Financial Statements/2024/Income Statements/ESP 2024 Income Statement.pdf",
+    "filename": "ESP 2024 Income Statement.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2024,
+    "document_type": "income_statement",
+    "file_size": 14007
+  },
+  {
+    "minio_path": "Financial Statements/2024/Income Statements/Hammond Aire 2024 Income Statement.pdf",
+    "filename": "Hammond Aire 2024 Income Statement.pdf",
+    "property_id": 3,
+    "property_name": "Hammond Aire",
+    "document_year": 2024,
+    "document_type": "income_statement",
+    "file_size": 14164
+  },
+  {
+    "minio_path": "Financial Statements/2024/Income Statements/TCSH 2024 Income Statement.pdf",
+    "filename": "TCSH 2024 Income Statement.pdf",
+    "property_id": 6,
+    "property_name": "The Crossings of Spring Hill",
+    "document_year": 2024,
+    "document_type": "income_statement",
+    "file_size": 7599
+  },
+  {
+    "minio_path": "Financial Statements/2024/Income Statements/Wendover Commons 2024 Income Statement.pdf",
+    "filename": "Wendover Commons 2024 Income Statement.pdf",
+    "property_id": 2,
+    "property_name": "Wendover Commons",
+    "document_year": 2024,
+    "document_type": "income_statement",
+    "file_size": 7531
+  },
+  {
+    "minio_path": "Financial Statements/2025/Rent Rolls/ESP April 2025 Rent Roll.pdf",
+    "filename": "ESP April 2025 Rent Roll.pdf",
+    "property_id": 1,
+    "property_name": "Empire State Plaza",
+    "document_year": 2025,
+    "document_type": "rent_roll",
+    "file_size": 41380
+  },
+  {
+    "minio_path": "Financial Statements/2025/Rent Rolls/Hammond Rent Roll April 2025.pdf",
+    "filename": "Hammond Rent Roll April 2025.pdf",
+    "property_id": 3,
+    "property_name": "Hammond Aire",
+    "document_year": 2025,
+    "document_type": "rent_roll",
+    "file_size": 60419
+  },
+  {
+    "minio_path": "Financial Statements/2025/Rent Rolls/TCSH Rent Roll April 2025.pdf",
+    "filename": "TCSH Rent Roll April 2025.pdf",
+    "property_id": 6,
+    "property_name": "The Crossings of Spring Hill",
+    "document_year": 2025,
+    "document_type": "rent_roll",
+    "file_size": 61660
+  },
+  {
+    "minio_path": "Financial Statements/2025/Rent Rolls/Wendover Rent Roll April 2025.pdf",
+    "filename": "Wendover Rent Roll April 2025.pdf",
+    "property_id": 2,
+    "property_name": "Wendover Commons",
+    "document_year": 2025,
+    "document_type": "rent_roll",
+    "file_size": 29636
+  }
+]
