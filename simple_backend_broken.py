@@ -917,429 +917,152 @@ async def upload_document(
         logger.error(f"Upload failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
-# Year-based financial helper functions
-def extract_year_from_filename(filename: str) -> Optional[int]:
-    """Extract 4-digit year from filename"""
-    import re
-    match = re.search(r'\b(20\d{2})\b', filename)
-    return int(match.group(1)) if match else None
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)# Year-based Financial Data Endpoints
 
-def get_latest_complete_year(property_id: int, db: Session) -> int:
-    """Get most recent complete fiscal year with data"""
-    try:
-        # First try to find a complete year (not partial)
-        result = db.execute(text("""
-            SELECT fiscal_year 
-            FROM property_financials_history 
-            WHERE property_id = :property_id 
-            AND is_partial_year = FALSE 
-            ORDER BY fiscal_year DESC 
-            LIMIT 1
-        """), {"property_id": property_id}).fetchone()
-        
-        if result:
-            return result[0]
-        
-        # Fallback to most recent year (even if partial)
-        result = db.execute(text("""
-            SELECT fiscal_year 
-            FROM property_financials_history 
-            WHERE property_id = :property_id 
-            ORDER BY fiscal_year DESC 
-            LIMIT 1
-        """), {"property_id": property_id}).fetchone()
-        
-        if result:
-            return result[0]
-        
-        # Default to current year if no data found
-        return datetime.now().year
-        
-    except Exception as e:
-        logger.error(f"Error getting latest complete year: {e}")
-        return datetime.now().year
-
-def determine_year_completeness(property_id: int, year: int, db: Session) -> dict:
-    """Determine if year data is complete"""
-    try:
-        # Check for documents in this year
-        docs_result = db.execute(text("""
-            SELECT document_type, COUNT(*) as count
-            FROM documents 
-            WHERE property_id = :property_id 
-            AND fiscal_year = :year
-            GROUP BY document_type
-        """), {"property_id": str(property_id), "year": year}).fetchall()
-        
-        doc_types = {row[0]: row[1] for row in docs_result}
-        
-        # Check for key financial documents
-        has_balance = doc_types.get('Balance Sheet', 0) > 0
-        has_income = doc_types.get('Income Statement', 0) > 0
-        has_cash_flow = doc_types.get('Cash Flow Statement', 0) > 0
-        
-        is_complete = has_balance and has_income and has_cash_flow
-        missing_docs = []
-        
-        if not has_balance:
-            missing_docs.append('Balance Sheet')
-        if not has_income:
-            missing_docs.append('Income Statement')
-        if not has_cash_flow:
-            missing_docs.append('Cash Flow Statement')
-        
-        # Get latest document date
-        latest_date_result = db.execute(text("""
-            SELECT MAX(upload_timestamp) 
-            FROM documents 
-            WHERE property_id = :property_id 
-            AND fiscal_year = :year
-        """), {"property_id": str(property_id), "year": year}).fetchone()
-        
-        latest_date = latest_date_result[0] if latest_date_result[0] else None
-        
-        return {
-            "is_complete": is_complete,
-            "missing_docs": missing_docs,
-            "latest_date": latest_date,
-            "available_docs": doc_types
-        }
-        
-    except Exception as e:
-        logger.error(f"Error determining year completeness: {e}")
-        return {
-            "is_complete": False,
-            "missing_docs": ["Unknown"],
-            "latest_date": None,
-            "available_docs": {}
-        }
-
-# Year-based financial endpoints
 @app.get("/api/properties/{property_id}/financials")
-async def get_property_financials(
-    property_id: int,
-    year: Optional[int] = None,
-    db: Session = Depends(get_db)
-):
-    """
-    Get financial data for a property and specific year.
-    If year not specified, returns latest complete year.
-    """
+async def get_property_financials_by_year(property_id: int, year: Optional[int] = None):
+    """Get financial data for a specific property and year"""
     if not DATABASE_AVAILABLE:
         raise HTTPException(status_code=503, detail="Database not available")
     
     try:
-        # Auto-select year if not provided
-        if year is None:
-            year = get_latest_complete_year(property_id, db)
+        import sqlite3
+        conn = sqlite3.connect("reims.db")
+        cursor = conn.cursor()
         
-        # Get financial data for selected year
-        result = db.execute(text("""
-            SELECT fiscal_year, is_partial_year, data_through_date,
-                   current_market_value, monthly_rent, annual_noi, 
-                   occupancy_rate, total_units, occupied_units,
-                   data_source, confidence_score
-            FROM property_financials_history 
-            WHERE property_id = :property_id AND fiscal_year = :year
-        """), {"property_id": property_id, "year": year}).fetchone()
+        if year:
+            cursor.execute("""
+                SELECT year, current_market_value, monthly_rent, annual_noi, 
+                       occupancy_rate, total_units, occupied_units, data_source
+                FROM property_financials_history 
+                WHERE property_id = ? AND year = ?
+                ORDER BY year DESC
+            """, (property_id, year))
+        else:
+            cursor.execute("""
+                SELECT year, current_market_value, monthly_rent, annual_noi, 
+                       occupancy_rate, total_units, occupied_units, data_source
+                FROM property_financials_history 
+                WHERE property_id = ?
+                ORDER BY year DESC
+            """, (property_id,))
         
-        if not result:
-            raise HTTPException(404, f"No financial data found for property {property_id} in {year}")
+        records = cursor.fetchall()
+        conn.close()
         
-        # Get year completeness info
-        completeness = determine_year_completeness(property_id, year, db)
+        if not records:
+            raise HTTPException(status_code=404, detail=f"No financial data found for property {property_id}")
         
-        # Get available years for this property
-        years_result = db.execute(text("""
-            SELECT fiscal_year, is_partial_year
-            FROM property_financials_history 
-            WHERE property_id = :property_id
-            ORDER BY fiscal_year DESC
-        """), {"property_id": property_id}).fetchall()
+        financial_data = []
+        for record in records:
+            financial_data.append({
+                "year": record[0],
+                "current_market_value": record[1],
+                "monthly_rent": record[2],
+                "annual_noi": record[3],
+                "occupancy_rate": record[4],
+                "total_units": record[5],
+                "occupied_units": record[6],
+                "data_source": record[7]
+            })
         
         return {
-            "success": True,
             "property_id": property_id,
-            "selected_year": year,
-            "is_partial_year": result[1],
-            "data_through_date": result[2],
-            "completeness": completeness,
-            "metrics": {
-                "current_market_value": result[3],
-                "monthly_rent": result[4],
-                "annual_noi": result[5],
-                "occupancy_rate": result[6],
-                "total_units": result[7],
-                "occupied_units": result[8]
-            },
-            "data_source": result[9],
-            "confidence_score": result[10],
-            "available_years": [
-                {
-                    "year": y[0],
-                    "is_complete": not y[1],
-                    "label": f"{y[0]} {'(YTD)' if y[1] else '(Full Year)'}"
-                }
-                for y in years_result
-            ]
+            "financial_data": financial_data,
+            "total_records": len(financial_data)
         }
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error getting property financials: {e}", exc_info=True)
+        logger.error(f"Error getting financial data: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/properties/{property_id}/financials/compare")
-async def compare_financials(
-    property_id: int,
-    years: str,  # Comma-separated: "2023,2024,2025"
-    db: Session = Depends(get_db)
-):
-    """Compare financial metrics across multiple years for a property"""
+async def compare_property_financials(property_id: int, years: str):
+    """Compare financial data across multiple years for a property"""
     if not DATABASE_AVAILABLE:
         raise HTTPException(status_code=503, detail="Database not available")
     
     try:
         year_list = [int(y.strip()) for y in years.split(',')]
         
-        # Get property name
-        property_result = db.execute(text("""
-            SELECT name FROM properties WHERE id = :property_id
-        """), {"property_id": property_id}).fetchone()
+        import sqlite3
+        conn = sqlite3.connect("reims.db")
+        cursor = conn.cursor()
         
-        if not property_result:
-            raise HTTPException(404, f"Property {property_id} not found")
+        cursor.execute("SELECT name FROM properties WHERE id = ?", (property_id,))
+        property_name = cursor.fetchone()
+        if not property_name:
+            raise HTTPException(status_code=404, detail=f"Property {property_id} not found")
         
-        # Get financials for all requested years
-        placeholders = ','.join([f':year_{i}' for i in range(len(year_list))])
-        params = {"property_id": property_id}
-        for i, year in enumerate(year_list):
-            params[f'year_{i}'] = year
-            
-        financials_result = db.execute(text(f"""
-            SELECT fiscal_year, is_partial_year, current_market_value, monthly_rent, 
-                   annual_noi, occupancy_rate, data_source
+        placeholders = ','.join(['?' for _ in year_list])
+        cursor.execute(f"""
+            SELECT year, current_market_value, monthly_rent, annual_noi, 
+                   occupancy_rate, total_units, occupied_units, data_source
             FROM property_financials_history 
-            WHERE property_id = :property_id 
-            AND fiscal_year IN ({placeholders})
-            ORDER BY fiscal_year ASC
-        """), params).fetchall()
+            WHERE property_id = ? AND year IN ({placeholders})
+            ORDER BY year ASC
+        """, [property_id] + year_list)
         
-        if not financials_result:
-            raise HTTPException(404, f"No financial data found for property {property_id} in years {years}")
+        records = cursor.fetchall()
+        conn.close()
         
-        # Calculate year-over-year changes
+        if not records:
+            raise HTTPException(status_code=404, detail=f"No financial data found for property {property_id} in years {years}")
+        
         comparison_data = []
-        prev_data = None
+        previous_values = {}
         
-        for row in financials_result:
-            year, is_partial_year, market_value, monthly_rent, annual_noi, occupancy_rate, data_source = row
-            
-            year_data = {
+        for record in records:
+            year = record[0]
+            current_values = {
                 "year": year,
-                "is_partial_year": is_partial_year,
-                "current_market_value": market_value,
-                "monthly_rent": monthly_rent,
-                "annual_noi": annual_noi,
-                "occupancy_rate": occupancy_rate,
-                "data_source": data_source,
+                "current_market_value": record[1],
+                "monthly_rent": record[2],
+                "annual_noi": record[3],
+                "occupancy_rate": record[4],
+                "total_units": record[5],
+                "occupied_units": record[6],
+                "data_source": record[7],
                 "changes": {}
             }
             
-            # Calculate percentage changes from previous year
-            if prev_data:
-                for metric in ['current_market_value', 'monthly_rent', 'annual_noi', 'occupancy_rate']:
-                    old_val = prev_data[metric]
-                    new_val = year_data[metric]
-                    
-                    if old_val and new_val and old_val != 0:
-                        pct_change = ((new_val - old_val) / old_val) * 100
-                        year_data["changes"][metric] = {
-                            "percentage_change": round(pct_change, 2),
-                            "absolute_change": new_val - old_val
-                        }
+            if previous_values:
+                for key in ['current_market_value', 'monthly_rent', 'annual_noi', 'occupancy_rate']:
+                    key_index = ['current_market_value', 'monthly_rent', 'annual_noi', 'occupancy_rate'].index(key) + 1
+                    if previous_values[key] is not None and record[key_index] is not None:
+                        old_val = previous_values[key]
+                        new_val = record[key_index]
+                        if old_val != 0:
+                            change_pct = ((new_val - old_val) / old_val) * 100
+                            current_values["changes"][key] = {
+                                "percentage_change": round(change_pct, 2),
+                                "absolute_change": new_val - old_val
+                            }
             
-            comparison_data.append(year_data)
-            prev_data = {
-                'current_market_value': market_value,
-                'monthly_rent': monthly_rent,
-                'annual_noi': annual_noi,
-                'occupancy_rate': occupancy_rate
+            comparison_data.append(current_values)
+            previous_values = {
+                "current_market_value": record[1],
+                "monthly_rent": record[2],
+                "annual_noi": record[3],
+                "occupancy_rate": record[4]
             }
         
         return {
-            "success": True,
             "property_id": property_id,
-            "property_name": property_result[0],
+            "property_name": property_name[0],
+            "comparison_data": comparison_data,
             "years_compared": year_list,
-            "comparison_data": comparison_data
+            "total_records": len(comparison_data)
         }
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error comparing financials: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
-
-# Property Name Validation Endpoints
-@app.get("/api/validation/statistics")
-async def get_validation_statistics():
-    """Get property name validation statistics"""
-    try:
-        from utils.validation_integration import get_validation_statistics
-        stats = get_validation_statistics()
-        return {
-            "success": True,
-            "statistics": stats,
-            "timestamp": datetime.now().isoformat()
-        }
-    except Exception as e:
-        logger.error(f"Error getting validation statistics: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/validation/queue")
-async def get_validation_queue():
-    """Get documents that need manual review"""
-    try:
-        from utils.validation_integration import get_validation_queue
-        queue = get_validation_queue()
-        return {
-            "success": True,
-            "queue": queue,
-            "count": len(queue),
-            "timestamp": datetime.now().isoformat()
-        }
-    except Exception as e:
-        logger.error(f"Error getting validation queue: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/validation/approve/{document_id}")
-async def approve_validation(
-    document_id: str,
-    property_id: int,
-    reviewer: str = "admin"
-):
-    """Approve a validation result"""
-    try:
-        from utils.validation_integration import ValidationIntegration
-        integration = ValidationIntegration()
-        
-        success = integration.approve_validation(document_id, property_id, reviewer)
-        
-        if success:
-            return {
-                "success": True,
-                "message": f"Validation approved for document {document_id}",
-                "timestamp": datetime.now().isoformat()
-            }
-        else:
-            raise HTTPException(status_code=400, detail="Failed to approve validation")
-            
-    except Exception as e:
-        logger.error(f"Error approving validation: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/validation/correct/{document_id}")
-async def correct_validation(
-    document_id: str,
-    property_id: int,
-    corrected_name: str,
-    reviewer: str = "admin"
-):
-    """Correct a validation result"""
-    try:
-        from utils.validation_integration import ValidationIntegration
-        integration = ValidationIntegration()
-        
-        success = integration.correct_validation(document_id, property_id, corrected_name, reviewer)
-        
-        if success:
-            return {
-                "success": True,
-                "message": f"Validation corrected for document {document_id}",
-                "corrected_name": corrected_name,
-                "timestamp": datetime.now().isoformat()
-            }
-        else:
-            raise HTTPException(status_code=400, detail="Failed to correct validation")
-            
-    except Exception as e:
-        logger.error(f"Error correcting validation: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/validation/add-alias/{document_id}")
-async def add_alias_for_validation(
-    document_id: str,
-    property_id: int,
-    alias_name: str,
-    reviewer: str = "admin"
-):
-    """Add alias based on validation result"""
-    try:
-        from utils.validation_integration import ValidationIntegration
-        integration = ValidationIntegration()
-        
-        success = integration.add_alias_for_validation(document_id, property_id, alias_name, reviewer)
-        
-        if success:
-            return {
-                "success": True,
-                "message": f"Added alias '{alias_name}' for property {property_id}",
-                "alias_name": alias_name,
-                "property_id": property_id,
-                "timestamp": datetime.now().isoformat()
-            }
-        else:
-            raise HTTPException(status_code=400, detail="Failed to add alias")
-            
-    except Exception as e:
-        logger.error(f"Error adding alias: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/validation/aliases/{property_id}")
-async def get_property_aliases(property_id: int):
-    """Get all aliases for a property"""
-    try:
-        from utils.alias_resolver import get_property_aliases
-        aliases = get_property_aliases(property_id)
-        
-        return {
-            "success": True,
-            "property_id": property_id,
-            "aliases": aliases,
-            "count": len(aliases),
-            "timestamp": datetime.now().isoformat()
-        }
-    except Exception as e:
-        logger.error(f"Error getting property aliases: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/validation/aliases/{property_id}")
-async def add_property_alias(
-    property_id: int,
-    alias_name: str,
-    alias_type: str = "common_name"
-):
-    """Add a new alias for a property"""
-    try:
-        from utils.alias_resolver import add_property_alias
-        success = add_property_alias(property_id, alias_name, alias_type)
-        
-        if success:
-            return {
-                "success": True,
-                "message": f"Added alias '{alias_name}' for property {property_id}",
-                "alias_name": alias_name,
-                "alias_type": alias_type,
-                "property_id": property_id,
-                "timestamp": datetime.now().isoformat()
-            }
-        else:
-            raise HTTPException(status_code=400, detail="Failed to add alias")
-            
-    except Exception as e:
-        logger.error(f"Error adding property alias: {e}")
+        logger.error(f"Error comparing financial data: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

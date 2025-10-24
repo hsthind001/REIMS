@@ -1,0 +1,810 @@
+{
+  "total_documents": 56,
+  "total_properties": 4,
+  "audit_timestamp": "2025-10-24T12:02:47.057158",
+  "documents_audited": [
+    {
+      "document_id": "aa02d0c1-7323-4ec2-99bd-41d719ebb34c",
+      "filename": "Wendover Commons 2023 Income Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "b1da596d-d5f7-4578-9c49-d55f70bd8b05",
+      "filename": "Wendover Commons 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "4b050bf1-38fa-40bc-b38b-63f9c846cc57",
+      "filename": "Wendover Commons 2023 Balance Sheet.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "eb5a4876-a3cb-47cd-8a2d-b9ba36473500",
+      "filename": "TCSH 2023 Income Statement.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "7b7c19f9-fdd9-4ecf-bff3-868c85a6d347",
+      "filename": "TCSH 2023 Cash FLow Statement.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "df2d3dba-44bf-4816-bf22-a5299ebc4aea",
+      "filename": "TCSH 2023 Balance Sheet.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "d084e8e2-c206-41d1-9a4c-17be0940203b",
+      "filename": "Hammond Aire 2023 Income Statement.pdf",
+      "extracted_name": "Hammond Aire Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "3c991c4a-6c16-4822-8960-d08622cf2d06",
+      "filename": "Hammond Aire 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Hammond Aire Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "d4eb7735-aabf-443f-8355-8d9f3d38b502",
+      "filename": "Hammond Aire 2023 Balance Sheet.pdf",
+      "extracted_name": "MidLand Loan Services",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "03f104dc-2d1a-49e2-9f7d-e7b0e5790e0c",
+      "filename": "ESP 2023 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "039da9c2-7483-44d9-beb3-9a30b9c44798",
+      "filename": "ESP 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "e45bbf86-fd4f-4a89-9392-f5ff33063791",
+      "filename": "ESP 2023 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "14a3d3cb-367c-4e9a-b4f4-977b36147c1b",
+      "filename": "Wendover Rent Roll April 2025.pdf",
+      "extracted_name": "Unit",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "7bdd1c7e-cd1e-4440-94dc-3810dbf2a94b",
+      "filename": "Wendover Commons 2024 Income Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "f617b12b-d9c6-44ea-ab4d-672909f75944",
+      "filename": "Wendover Commons 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "8c733c44-68f1-44df-8a6d-2a9f7005a2e4",
+      "filename": "Wendover Commons 2024 Balance Sheet.pdf",
+      "extracted_name": "Wendover Commons",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "1c67defc-45d4-4c64-9bc5-03ec2d130dce",
+      "filename": "ESP April 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "6a104c3f-d30d-4940-8d5a-a11d93553d26",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "0caf5ae5-7beb-4715-aa6d-f13e7dc27f91",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "d3b9e4a0-c2ce-4ef6-8c13-0c0bc80f21cd",
+      "filename": "ESP 2024 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "f3bdeca3-c63a-49a4-b117-5d31c0dc8762",
+      "filename": "ESP April 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "ffc46a32-7761-43e6-9e7d-efddd06a53cc",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "254ace19-73d1-4862-a39e-b7ae76ff945a",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "0a7c48fe-4719-43cb-8e40-81fbeadcfd72",
+      "filename": "ESP 2024 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "c8d7f5f7-eefa-4094-8aa6-d018f14ffcfe",
+      "filename": "Hammond Aire 2023 Balance Sheet.pdf",
+      "extracted_name": "MidLand Loan Services",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "ace89083-c645-4480-853e-8a4936f46049",
+      "filename": "ESP Aprill 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "d7f6a42f-6474-47ca-a28a-6b3f2d199b84",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "b9f0a716-35e9-48ac-99f1-4fd17ca15769",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "database_name": "",
+      "property_id": null,
+      "confidence": 0.0,
+      "status": "mismatch",
+      "needs_review": true,
+      "suggestions": []
+    },
+    {
+      "document_id": "2d18621d-aebc-4ad7-9495-6f218e5732a2",
+      "filename": "test_new_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "796f88d7-b8bb-4c1f-b8b8-496d4e3e4f2e",
+      "filename": "test_new_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "411bb6e9-b377-4b65-abb5-f837bdd97d20",
+      "filename": "test_new_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "8360be3b-94d9-4b90-8e79-e62fe0288ca9",
+      "filename": "test_new_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "26014446-f2ee-4302-8cab-ca8a31caad46",
+      "filename": "test_new_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "48d7e5d2-b9db-4dbc-8d6d-58ccd6a3ba3b",
+      "filename": "test_rq_integration.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "b39fb477-0769-4eb6-9320-50ec404ceca4",
+      "filename": "test_rq_integration.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "9fe0bbef-ac7a-40d4-9ca6-930445595424",
+      "filename": "test_rq_integration.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "ceefb2d1-f1e4-4d2a-848d-fc2ef8937715",
+      "filename": "test_queue.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "a770c7fd-b710-4247-b69e-098519bd79ac",
+      "filename": "test_queue.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "955a88fe-c0ab-48cd-8b1b-2a714bf17f49",
+      "filename": "TCSH Rent Roll April 2025.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "6f945850-7023-4697-b4e4-12c2ef44dc9d",
+      "filename": "TCSH 2024 Income Statement.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "4f961585-182d-4069-86a5-aad124de563b",
+      "filename": "TCSH 2024 Cash Flow Statement.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "1c73e8ea-987e-4500-8ebb-d67e0e0cf798",
+      "filename": "TCSH 2024 Balance Sheet.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "d7f0566e-7de5-47ad-be52-d56f05add9c7",
+      "filename": "test_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "162eee64-f2bb-494d-820a-435ea727dd9d",
+      "filename": "test_upload.csv",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "4dfe8e23-66c6-43f9-9327-77a41c2f77d4",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "ec848ed4-057b-4ddc-9af2-56de999abe25",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "810f5220-c159-41d9-a0ff-2d280b7fdb81",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "8f601959-c43f-4f95-b635-7a2ccd6c2568",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "9137c879-c768-4091-8bcf-b69720474b35",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "05e8b08b-971c-4e9c-9a7a-9aff7bae8ac9",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "02435e01-dd09-411e-ba64-8b4486ea519f",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "29419704-4418-478d-9d3f-f82bee3f7053",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "d09b3c49-b13e-40cd-b2ef-15fa55c60563",
+      "filename": "README.md",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "8edc64ad-132f-47b1-9a58-05c6fefd4d1b",
+      "filename": "f5ff5dec-9556-48dd-9c35-77a904f9319a_ESP 2024 Cash Flow Statement.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "40af6adc-3557-49a4-becf-f191ac2f036f",
+      "filename": "42ae598a-c298-4225-be50-4ab150a6b0f4_ESP 2024 Income Statement.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    },
+    {
+      "document_id": "babe8224-3161-4d73-bd51-88cfa8b3c74b",
+      "filename": "146ee214-461e-4bc6-b99b-e254f1cfe693_ESP 2024 Balance Sheet.pdf",
+      "status": "extraction_failed",
+      "message": "Could not extract property name",
+      "needs_review": true
+    }
+  ],
+  "property_mismatches": [
+    {
+      "document_id": "aa02d0c1-7323-4ec2-99bd-41d719ebb34c",
+      "filename": "Wendover Commons 2023 Income Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "b1da596d-d5f7-4578-9c49-d55f70bd8b05",
+      "filename": "Wendover Commons 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "4b050bf1-38fa-40bc-b38b-63f9c846cc57",
+      "filename": "Wendover Commons 2023 Balance Sheet.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "eb5a4876-a3cb-47cd-8a2d-b9ba36473500",
+      "filename": "TCSH 2023 Income Statement.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "expected_property": "The Crossings of Spring Hill",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "7b7c19f9-fdd9-4ecf-bff3-868c85a6d347",
+      "filename": "TCSH 2023 Cash FLow Statement.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "expected_property": "The Crossings of Spring Hill",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "df2d3dba-44bf-4816-bf22-a5299ebc4aea",
+      "filename": "TCSH 2023 Balance Sheet.pdf",
+      "extracted_name": "The Crossings of Spring Hill",
+      "expected_property": "The Crossings of Spring Hill",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "d084e8e2-c206-41d1-9a4c-17be0940203b",
+      "filename": "Hammond Aire 2023 Income Statement.pdf",
+      "extracted_name": "Hammond Aire Plaza",
+      "expected_property": "Hammond Aire",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "3c991c4a-6c16-4822-8960-d08622cf2d06",
+      "filename": "Hammond Aire 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Hammond Aire Plaza",
+      "expected_property": "Hammond Aire",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "d4eb7735-aabf-443f-8355-8d9f3d38b502",
+      "filename": "Hammond Aire 2023 Balance Sheet.pdf",
+      "extracted_name": "MidLand Loan Services",
+      "expected_property": "Hammond Aire",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "03f104dc-2d1a-49e2-9f7d-e7b0e5790e0c",
+      "filename": "ESP 2023 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "039da9c2-7483-44d9-beb3-9a30b9c44798",
+      "filename": "ESP 2023 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "e45bbf86-fd4f-4a89-9392-f5ff33063791",
+      "filename": "ESP 2023 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "14a3d3cb-367c-4e9a-b4f4-977b36147c1b",
+      "filename": "Wendover Rent Roll April 2025.pdf",
+      "extracted_name": "Unit",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "7bdd1c7e-cd1e-4440-94dc-3810dbf2a94b",
+      "filename": "Wendover Commons 2024 Income Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "f617b12b-d9c6-44ea-ab4d-672909f75944",
+      "filename": "Wendover Commons 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "8c733c44-68f1-44df-8a6d-2a9f7005a2e4",
+      "filename": "Wendover Commons 2024 Balance Sheet.pdf",
+      "extracted_name": "Wendover Commons",
+      "expected_property": "Wendover Commons",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "1c67defc-45d4-4c64-9bc5-03ec2d130dce",
+      "filename": "ESP April 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "6a104c3f-d30d-4940-8d5a-a11d93553d26",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "0caf5ae5-7beb-4715-aa6d-f13e7dc27f91",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "d3b9e4a0-c2ce-4ef6-8c13-0c0bc80f21cd",
+      "filename": "ESP 2024 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "f3bdeca3-c63a-49a4-b117-5d31c0dc8762",
+      "filename": "ESP April 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "ffc46a32-7761-43e6-9e7d-efddd06a53cc",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "254ace19-73d1-4862-a39e-b7ae76ff945a",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "0a7c48fe-4719-43cb-8e40-81fbeadcfd72",
+      "filename": "ESP 2024 Balance Sheet.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "c8d7f5f7-eefa-4094-8aa6-d018f14ffcfe",
+      "filename": "Hammond Aire 2023 Balance Sheet.pdf",
+      "extracted_name": "MidLand Loan Services",
+      "expected_property": "Hammond Aire",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "ace89083-c645-4480-853e-8a4936f46049",
+      "filename": "ESP Aprill 2025 Rent Roll.pdf",
+      "extracted_name": "Unit",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "d7f6a42f-6474-47ca-a28a-6b3f2d199b84",
+      "filename": "ESP 2024 Income Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    },
+    {
+      "document_id": "b9f0a716-35e9-48ac-99f1-4fd17ca15769",
+      "filename": "ESP 2024 Cash Flow Statement.pdf",
+      "extracted_name": "Eastern Shore Plaza",
+      "expected_property": "Empire State Plaza",
+      "confidence": 0.0,
+      "suggestions": []
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"Wendover Commons\"",
+      "description": "Found 6 documents with property name \"Wendover Commons\"",
+      "action": "Add alias \"Wendover Commons\" to appropriate property",
+      "affected_documents": 6
+    },
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"The Crossings of Spring Hill\"",
+      "description": "Found 3 documents with property name \"The Crossings of Spring Hill\"",
+      "action": "Add alias \"The Crossings of Spring Hill\" to appropriate property",
+      "affected_documents": 3
+    },
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"Hammond Aire Plaza\"",
+      "description": "Found 2 documents with property name \"Hammond Aire Plaza\"",
+      "action": "Add alias \"Hammond Aire Plaza\" to appropriate property",
+      "affected_documents": 2
+    },
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"MidLand Loan Services\"",
+      "description": "Found 2 documents with property name \"MidLand Loan Services\"",
+      "action": "Add alias \"MidLand Loan Services\" to appropriate property",
+      "affected_documents": 2
+    },
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"Eastern Shore Plaza\"",
+      "description": "Found 11 documents with property name \"Eastern Shore Plaza\"",
+      "action": "Add alias \"Eastern Shore Plaza\" to appropriate property",
+      "affected_documents": 11
+    },
+    {
+      "type": "bulk_alias",
+      "priority": "high",
+      "title": "Add alias for \"Unit\"",
+      "description": "Found 4 documents with property name \"Unit\"",
+      "action": "Add alias \"Unit\" to appropriate property",
+      "affected_documents": 4
+    },
+    {
+      "type": "manual_review",
+      "priority": "medium",
+      "title": "Review low confidence matches",
+      "description": "Found 28 documents with low confidence matches",
+      "action": "Manually review and correct property assignments",
+      "affected_documents": 28
+    },
+    {
+      "type": "extraction_improvement",
+      "priority": "medium",
+      "title": "Improve property name extraction",
+      "description": "Failed to extract property names from 28 documents",
+      "action": "Review extraction patterns and improve PDF text extraction",
+      "affected_documents": 28
+    }
+  ],
+  "statistics": {
+    "exact_matches": 0,
+    "fuzzy_matches": 0,
+    "mismatches": 28,
+    "extraction_failures": 28,
+    "needs_review": 28
+  }
+}

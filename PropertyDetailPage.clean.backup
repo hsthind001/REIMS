@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, TrendingUp, DollarSign, Home, Percent, BarChart3, FileText } from 'lucide-react';
+import { ArrowLeft, TrendingUp, DollarSign, Home, Percent } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ChartCard from './charts/ChartCard';
 import MetricCard from './charts/MetricCard';
 import PropertyNOIChart from './charts/PropertyNOIChart';
 import PropertyRevenueChart from './charts/PropertyRevenueChart';
-import YearSelector from './YearSelector';
-import YearBadge from './YearBadge';
-import FinancialComparison from './FinancialComparison';
-import DocumentAvailabilityMatrix from './DocumentAvailabilityMatrix';
-import { usePropertyFinancials } from '../hooks/usePropertyFinancials';
 
 export default function PropertyDetailPage() {
   const { propertyId } = useParams();
@@ -18,27 +13,6 @@ export default function PropertyDetailPage() {
   const [propertyData, setPropertyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Year-based state
-  const [selectedYear, setSelectedYear] = useState(null);
-  const [comparisonMode, setComparisonMode] = useState(false);
-  const [showDocumentMatrix, setShowDocumentMatrix] = useState(false);
-  
-  // Use the year-based financial hook
-  const {
-    financials,
-    comparison,
-    loading: financialsLoading,
-    error: financialsError,
-    availableYears,
-    selectedYear: currentYear,
-    isPartialYear,
-    metrics,
-    completeness,
-    changeYear,
-    enableComparison,
-    disableComparison
-  } = usePropertyFinancials(propertyId, { year: selectedYear });
 
   // Fetch property-specific data
   useEffect(() => {
@@ -75,29 +49,7 @@ export default function PropertyDetailPage() {
     }
   }, [propertyId]);
 
-  // Year selection handlers
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    changeYear(year);
-  };
-
-  const handleComparisonToggle = () => {
-    if (comparisonMode) {
-      setComparisonMode(false);
-      disableComparison();
-    } else {
-      setComparisonMode(true);
-      const years = availableYears.map(y => y.year);
-      enableComparison(years);
-    }
-  };
-
   const calculateYearlyReturn = () => {
-    if (metrics) {
-      const annualNOI = metrics.annual_noi || 0;
-      const propertyValue = metrics.current_market_value || 1;
-      return ((annualNOI / propertyValue) * 100).toFixed(1);
-    }
     if (!propertyData) return 0;
     const annualNOI = propertyData.noi || 0;
     const propertyValue = propertyData.current_market_value || 1;
@@ -294,7 +246,7 @@ export default function PropertyDetailPage() {
             }}>
               <Home size={28} color="white" />
             </div>
-            <div style={{ flex: 1 }}>
+            <div>
               <h1 style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
@@ -305,76 +257,9 @@ export default function PropertyDetailPage() {
               </h1>
               <div style={{
                 fontSize: '16px',
-                color: '#6b7280',
-                marginBottom: '16px'
+                color: '#6b7280'
               }}>
                 {propertyData.address}, {propertyData.city}, {propertyData.state}
-              </div>
-              
-              {/* Year Controls */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '16px',
-                flexWrap: 'wrap'
-              }}>
-                <YearSelector
-                  years={availableYears}
-                  selectedYear={currentYear}
-                  onYearChange={handleYearChange}
-                />
-                
-                {currentYear && (
-                  <YearBadge
-                    year={currentYear}
-                    isComplete={!isPartialYear}
-                    dataThroughDate={financials?.data_through_date}
-                  />
-                )}
-                
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    onClick={handleComparisonToggle}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      backgroundColor: comparisonMode ? '#3b82f6' : '#f3f4f6',
-                      color: comparisonMode ? 'white' : '#374151',
-                      border: 'none',
-                      borderRadius: '6px',
-                      padding: '8px 12px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <BarChart3 size={14} />
-                    {comparisonMode ? 'Exit Comparison' : 'Compare Years'}
-                  </button>
-                  
-                  <button
-                    onClick={() => setShowDocumentMatrix(!showDocumentMatrix)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      backgroundColor: showDocumentMatrix ? '#3b82f6' : '#f3f4f6',
-                      color: showDocumentMatrix ? 'white' : '#374151',
-                      border: 'none',
-                      borderRadius: '6px',
-                      padding: '8px 12px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <FileText size={14} />
-                    {showDocumentMatrix ? 'Hide Documents' : 'Show Documents'}
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -416,7 +301,7 @@ export default function PropertyDetailPage() {
                 fontWeight: 'bold',
                 color: '#0c4a6e'
               }}>
-                {formatCurrency(metrics?.current_market_value || propertyData.current_market_value)}
+                {formatCurrency(propertyData.current_market_value)}
               </div>
             </div>
 
@@ -450,7 +335,7 @@ export default function PropertyDetailPage() {
                 fontWeight: 'bold',
                 color: '#14532d'
               }}>
-                {formatCurrency(metrics?.annual_noi || propertyData.noi)}
+                {formatCurrency(propertyData.noi)}
               </div>
             </div>
 
@@ -518,7 +403,7 @@ export default function PropertyDetailPage() {
                 fontWeight: 'bold',
                 color: '#5b21b6'
               }}>
-                {formatPercentage(metrics?.occupancy_rate || propertyData.occupancy_rate)}
+                {formatPercentage(propertyData.occupancy_rate)}
               </div>
             </div>
           </div>
@@ -780,51 +665,6 @@ export default function PropertyDetailPage() {
             </div>
           </div>
         </motion.div>
-
-        {/* Year Comparison Section */}
-        {comparisonMode && comparison && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              backgroundColor: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              marginBottom: '32px',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e5e7eb'
-            }}
-          >
-            <FinancialComparison 
-              comparisonData={comparison.comparison_data}
-              className="w-full"
-            />
-          </motion.div>
-        )}
-
-        {/* Document Availability Matrix */}
-        {showDocumentMatrix && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              backgroundColor: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              marginBottom: '32px',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e5e7eb'
-            }}
-          >
-            <DocumentAvailabilityMatrix 
-              propertyId={propertyId}
-              years={availableYears}
-              className="w-full"
-            />
-          </motion.div>
-        )}
       </div>
 
       {/* Add CSS animation for loading spinner */}
